@@ -1,2 +1,6 @@
-## Refactoring the project using react-hooks-redux.
-[Base Project](https://github.com/luiz504/RocketShoes-Web)
+## Refactoring the project using hooks.
+[Base Project - Using Class](https://github.com/luiz504/RocketShoes-Web)
+
+## All classes statmantes was replaced for functions, using the hooks functions to deal with local and global states.
+
+### - [ ] Next step, apply ducks pattern to simplify even more the redux work flow.
