@@ -68,6 +68,7 @@ export default function Home() {
     <Container>
       <List
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={products}
         extraData={quantity}
         keyExtractor={item => String(item.id)}
