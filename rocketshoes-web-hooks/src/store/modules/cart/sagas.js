@@ -6,11 +6,15 @@ import api from '../../../services/api';
 
 import { formatPrice } from '../../../Util/format';
 
-import { addToCartSucess, updateAmountSuccess } from './actions';
+import {
+  addToCartSucess,
+  updateAmountSuccess,
+  updateAmountFail,
+} from './actions';
 
 function* addToCart({ id }) {
   const productExists = yield select(state =>
-    state.cart.find(p => p.id === id)
+    state.cart.products.find(p => p.id === id)
   );
 
   const stock = yield call(api.get, `/stock/${id}`);
@@ -22,6 +26,7 @@ function* addToCart({ id }) {
 
   if (amount > stockAmount) {
     toast.error('The quantity exceeds the stock availability');
+    yield put(updateAmountFail());
     return;
   }
 
@@ -52,6 +57,6 @@ function* updateAmount({ id, amount }) {
   yield put(updateAmountSuccess(id, amount));
 }
 export default all([
-  takeLatest('@cart/ADD_REQ', addToCart),
-  takeLatest('@cart/UPDATE_AMOUNT_REQ', updateAmount),
+  takeLatest('@cart/ADD_REQUEST', addToCart),
+  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
 ]);

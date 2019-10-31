@@ -1,8 +1,19 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { darken } from 'polished';
 
 import { ChasingDots } from 'styled-spinkit';
+import { FaSpinner } from 'react-icons/fa';
+
 import colors from '../../styles/color';
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg)
+  }
+`;
 
 export const ProductList = styled.ul`
   display: grid;
@@ -62,8 +73,10 @@ export const ProductList = styled.ul`
       div {
         display: flex;
         align-items: center;
+        justify-content: center;
         padding: 12px;
         background: rgba(0, 0, 0, 0.1);
+        width: 55px;
 
         svg {
           margin-right: 5px;
@@ -86,3 +99,19 @@ export const LoadingContainer = styled.div`
 `;
 
 export const LoadingAnimation = styled(ChasingDots)``;
+
+export const LoadingAnimationButtonSvg = styled(FaSpinner)``;
+
+export const LoadingAnimationButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  width: 55px;
+
+  svg {
+    animation: ${rotate} 2s ease-in-out infinite;
+  }
+  /* */
+`;

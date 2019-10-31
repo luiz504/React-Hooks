@@ -1,32 +1,42 @@
 import produce from 'immer';
 
-export default function cart(state = [], action) {
-  switch (action.type) {
-    case '@cart/ADD_SUCESS':
-      return produce(state, draft => {
-        const { product } = action;
+const INITIAL_STATE = {
+  products: [],
+  loading: null,
+};
 
-        draft.push(product);
-      });
-    case '@cart/RM_REQUEST':
-      return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.id);
-
+export default function cart(state = INITIAL_STATE, action) {
+  return produce(state, draft => {
+    switch (action.type) {
+      case '@cart/ADD_REQUEST': {
+        draft.loading = action.id;
+        break;
+      }
+      case '@cart/ADD_SUCESS': {
+        draft.products.push(action.product);
+        draft.loading = null;
+        break;
+      }
+      case '@cart/REMOVE': {
+        const productIndex = draft.products.findIndex(p => p.id === action.id);
         if (productIndex >= 0) {
-          draft.splice(productIndex, 1);
+          draft.products.splice(productIndex, 1);
         }
-      });
-    case '@cart/UPDATE_AMOUNT_SUCESS': {
-      return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.id);
-
+        break;
+      }
+      case '@cart/UPDATE_AMOUNT_SUCESS': {
+        const productIndex = draft.products.findIndex(p => p.id === action.id);
         if (productIndex >= 0) {
-          draft[productIndex].amount = Number(action.amount);
+          draft.products[productIndex].amount = Number(action.amount);
+          draft.loading = null;
         }
-      });
+        break;
+      }
+      case '@cart/UPDATE_AMOUNT_FAIL': {
+        draft.loading = null;
+        break;
+      }
+      default:
     }
-
-    default:
-      return state;
-  }
+  });
 }

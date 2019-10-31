@@ -13,7 +13,7 @@ export function AddToCartSucess(product) {
 
 export function RmFromCart(id) {
   return {
-    type: '@cart/RM_REQUEST',
+    type: '@cart/REMOVE',
     id,
   };
 }
@@ -30,5 +30,10 @@ export function UpdateAmountSucess(id, amount) {
     type: '@cart/UPDATE_AMOUNT_SUCESS',
     id,
     amount,
+  };
+}
+export function UpdateAmountFail() {
+  return {
+    type: '@cart/UPDATE_AMOUNT_FAIL',
   };
 }

@@ -9,18 +9,25 @@ import { formatPrice } from '../../Util/format';
 import api from '../../services/api';
 import * as CartActions from '../../store/modules/cart/actions';
 
-import { ProductList, LoadingContainer, LoadingAnimation } from './styles';
+import {
+  ProductList,
+  LoadingContainer,
+  LoadingAnimation,
+  LoadingAnimationButton,
+  LoadingAnimationButtonSvg,
+} from './styles';
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [houvered, setHouvered] = useState(null);
   const quantity = useSelector(state =>
-    state.cart.reduce((amount, product) => {
+    state.cart.products.reduce((amount, product) => {
       amount[product.id] = product.amount;
       return amount;
     }, {})
   );
+  const loadingGlobal = useSelector(state => state.cart.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -67,10 +74,21 @@ export default function Home() {
           <span>{product.priceFormatted}</span>
 
           <button type="button" onClick={() => handleAddToCart(product.id)}>
-            <div>
-              <MdAddShoppingCart size={16} color="#fff" />
-              {quantity[product.id] || 0}
-            </div>
+            {loadingGlobal === product.id ? (
+              <LoadingAnimationButton loading={loadingGlobal === product.id}>
+                <LoadingAnimationButtonSvg size={16} color={colors.whiteBase} />
+              </LoadingAnimationButton>
+            ) : (
+              <div>
+                <MdAddShoppingCart
+                  key={product.id}
+                  size={16}
+                  color={colors.whiteBase}
+                />
+                {quantity[product.id] || 0}
+              </div>
+            )}
+
             <span> ADD TO CART </span>
           </button>
         </li>

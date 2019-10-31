@@ -20,6 +20,8 @@ import {
   AddButtonText,
   LoadingContainer,
   LoadingAnimation,
+  ProductAmontLoading,
+  LoadingIcon,
 } from './styles';
 import colors from '../../styles/color';
 
@@ -28,11 +30,13 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const quantity = useSelector(state =>
-    state.cart.reduce((amount, product) => {
+    state.cart.products.reduce((amount, product) => {
       amount[product.id] = product.amount;
       return amount;
     }, {})
   );
+
+  const loadingGlobal = useSelector(state => state.cart.loading);
 
   const dispatch = useDispatch();
 
@@ -68,6 +72,7 @@ export default function Home() {
     <Container>
       <List
         horizontal
+        showsHorizontalScrollIndicator={false}
         data={products}
         extraData={quantity}
         keyExtractor={item => String(item.id)}
@@ -81,14 +86,23 @@ export default function Home() {
             <ProductTitle>{item.title}</ProductTitle>
             <PoductPrice>{item.priceFormatted}</PoductPrice>
             <AddButtonContainer onPress={() => handleAddToCart(item.id)}>
-              <ProductAmount>
-                <Icon
-                  name="add-shopping-cart"
-                  size={20}
-                  color={colors.whiteBase}
-                />
-                <ProductAmountText>{quantity[item.id] || 0}</ProductAmountText>
-              </ProductAmount>
+              {loadingGlobal === item.id ? (
+                <ProductAmontLoading>
+                  <LoadingIcon />
+                </ProductAmontLoading>
+              ) : (
+                <ProductAmount>
+                  <Icon
+                    name="add-shopping-cart"
+                    size={20}
+                    color={colors.whiteBase}
+                  />
+                  <ProductAmountText>
+                    {quantity[item.id] || 0}
+                  </ProductAmountText>
+                </ProductAmount>
+              )}
+
               <AddButtonText> Add to cart</AddButtonText>
             </AddButtonContainer>
           </Product>
