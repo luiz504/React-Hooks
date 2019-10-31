@@ -14,7 +14,7 @@ import {
 } from './styles';
 
 export default function Header({ navigation }) {
-  const cartSize = useSelector(state => state.cart.length);
+  const cartSize = useSelector(state => state.cart.products.length);
 
   return (
     <Wrapper>

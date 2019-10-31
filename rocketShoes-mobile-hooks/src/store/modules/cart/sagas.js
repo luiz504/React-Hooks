@@ -5,11 +5,15 @@ import { formatPrice } from '../../../util/format';
 
 import api from '../../../services/api';
 
-import { AddToCartSucess, UpdateAmountSucess } from './action';
+import {
+  AddToCartSucess,
+  UpdateAmountSucess,
+  UpdateAmountFail,
+} from './action';
 
 function* addToCart({ id }) {
   const productExists = yield select(state =>
-    state.cart.find(p => p.id === id)
+    state.cart.products.find(p => p.id === id)
   );
 
   const stock = yield call(api.get, `stock/${id}`);
@@ -19,7 +23,8 @@ function* addToCart({ id }) {
   const amount = currentAmount + 1;
 
   if (amount > stockAmount) {
-    Alert.alert('Sry', 'The quantity exceeds the stock availability');
+    Alert.alert('Sorry...', 'The quantity exceeds the stock availability');
+    yield put(UpdateAmountFail());
     return;
   }
 

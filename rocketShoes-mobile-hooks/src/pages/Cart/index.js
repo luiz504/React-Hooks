@@ -34,13 +34,13 @@ import {
 export default function Cart() {
   const total = useSelector(state =>
     formatPrice(
-      state.cart.reduce((totalSum, product) => {
+      state.cart.products.reduce((totalSum, product) => {
         return totalSum + product.price * product.amount;
       }, 0)
     )
   );
   const cartProducts = useSelector(state =>
-    state.cart.map(product => ({
+    state.cart.products.map(product => ({
       ...product,
       subtotal: formatPrice(product.price * product.amount),
     }))

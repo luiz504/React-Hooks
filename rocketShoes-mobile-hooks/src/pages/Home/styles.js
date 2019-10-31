@@ -41,9 +41,26 @@ export const AddButtonContainer = styled.TouchableOpacity`
   border-radius: 5px;
   margin-top: auto;
 `;
+export const ProductAmontLoading = styled.View`
+  height: 42px;
+  width: 53px;
+  padding: 12px;
+  background: ${darken(0.03, colors.purple)};
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const LoadingIcon = styled.ActivityIndicator.attrs({
+  color: colors.whiteBase,
+})``;
 
 export const ProductAmount = styled.View`
   padding: 12px;
+  height: 42px;
+  width: 53px;
   background: ${darken(0.03, colors.purple)};
 
   border-top-left-radius: 5px;
@@ -65,6 +82,7 @@ export const AddButtonText = styled.Text`
   color: ${colors.whiteBase};
   text-transform: uppercase;
 `;
+
 export const LoadingContainer = styled.View`
   flex: 1;
   justify-content: center;
