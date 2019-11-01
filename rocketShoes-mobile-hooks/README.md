@@ -3,5 +3,5 @@
 
 ## All classes statmantes was replaced for functions, using the hooks functions to deal with local and global states.
 
-### - [ ] Next step, apply ducks pattern to simplify even more the redux work flow.
+
 
